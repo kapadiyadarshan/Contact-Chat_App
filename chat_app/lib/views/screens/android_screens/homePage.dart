@@ -14,6 +14,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: const Text("Chat App"),
         centerTitle: true,
@@ -158,7 +159,7 @@ class HomePage extends StatelessWidget {
           }),
           IndexedStack(
             index: Provider.of<MyPageController>(context).currentIndex,
-            children: const [
+            children: [
               AddChatPage(),
               ChatsPage(),
               CallsPage(),

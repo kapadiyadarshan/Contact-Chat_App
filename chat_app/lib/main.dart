@@ -1,4 +1,6 @@
+import 'package:chat_app/controller/chat_controller.dart';
 import 'package:chat_app/controller/dateTime_controller.dart';
+import 'package:chat_app/controller/image_controller.dart';
 import 'package:chat_app/controller/myPage_controller.dart';
 import 'package:chat_app/controller/platform_controller.dart';
 import 'package:chat_app/utils/color_utils.dart';
@@ -7,9 +9,18 @@ import 'package:chat_app/views/screens/android_screens/homePage.dart';
 import 'package:chat_app/views/screens/iOS_screens/iOS_homePage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  SystemChrome.setPreferredOrientations(
+    [
+      DeviceOrientation.portraitUp,
+    ],
+  );
+
   runApp(
     MultiProvider(
       providers: [
@@ -22,6 +33,12 @@ void main() {
         ChangeNotifierProvider(
           create: (context) => DateTimeController(),
         ),
+        ChangeNotifierProvider(
+          create: (context) => ImageController(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => ChatController(),
+        )
       ],
       child: const MyApp(),
     ),
@@ -54,7 +71,7 @@ class MyApp extends StatelessWidget {
           )
         : CupertinoApp(
             debugShowCheckedModeBanner: false,
-            theme: CupertinoThemeData(
+            theme: const CupertinoThemeData(
               brightness: Brightness.light,
             ),
             initialRoute: iOSRoute.Homepage,

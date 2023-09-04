@@ -1,40 +1,74 @@
+import 'package:chat_app/controller/chat_controller.dart';
 import 'package:chat_app/controller/dateTime_controller.dart';
+import 'package:chat_app/controller/image_controller.dart';
+import 'package:chat_app/model/chat_model.dart';
 import 'package:chat_app/utils/color_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
 class AddChatPage extends StatelessWidget {
-  const AddChatPage({super.key});
+  AddChatPage({super.key});
+
+  String? name = "";
+  String? phoneNum = "";
+  String? chat = "";
+  String? chatDate = "";
+  String? chatTime = "";
+  String? image = "";
+
+  GlobalKey<FormState> formKey = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(12),
-        child: SingleChildScrollView(
+    return Padding(
+      padding: const EdgeInsets.all(12),
+      child: SizedBox(
+        height: 724,
+        width: double.infinity,
+        child: Form(
+          key: formKey,
+          autovalidateMode: AutovalidateMode.onUserInteraction,
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const CircleAvatar(
-                radius: 80,
-              ),
+              Consumer<ImageController>(builder: (context, provider, _) {
+                return CircleAvatar(
+                  radius: 80,
+                  backgroundImage: (provider.file != null)
+                      ? FileImage(Provider.of<ImageController>(context).file!)
+                      : null,
+                );
+              }),
               const SizedBox(
                 height: 12,
               ),
               //Add Image
-              Container(
-                height: 40,
-                width: 120,
-                padding: const EdgeInsets.all(4),
-                decoration: BoxDecoration(
-                  color: MyColor.theme1,
-                  borderRadius: BorderRadius.circular(10),
+              GestureDetector(
+                onTap: () async {
+                  ImagePicker pickImg = ImagePicker();
+                  XFile? file;
+
+                  file = await pickImg.pickImage(source: ImageSource.gallery);
+
+                  if (file != null) {
+                    Provider.of<ImageController>(context, listen: false)
+                        .imageUpdate(f: file);
+                  }
+                },
+                child: Container(
+                  height: 40,
+                  width: 120,
+                  padding: const EdgeInsets.all(4),
+                  decoration: BoxDecoration(
+                    color: MyColor.theme1,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  alignment: Alignment.center,
+                  child: Text("Add Image",
+                      style: TextStyle(
+                        color: MyColor.theme3,
+                      )),
                 ),
-                alignment: Alignment.center,
-                child: Text("Add Image",
-                    style: TextStyle(
-                      color: MyColor.theme3,
-                    )),
               ),
               const SizedBox(
                 height: 24,
@@ -73,6 +107,9 @@ class AddChatPage extends StatelessWidget {
                     ),
                   ),
                 ),
+                onChanged: (value) {
+                  name = value;
+                },
               ),
               const SizedBox(
                 height: 12,
@@ -111,6 +148,9 @@ class AddChatPage extends StatelessWidget {
                     ),
                   ),
                 ),
+                onChanged: (value) {
+                  phoneNum = value;
+                },
               ),
               const SizedBox(
                 height: 12,
@@ -126,7 +166,7 @@ class AddChatPage extends StatelessWidget {
                 },
                 cursorColor: MyColor.theme1,
                 keyboardType: TextInputType.name,
-                textInputAction: TextInputAction.next,
+                textInputAction: TextInputAction.done,
                 decoration: InputDecoration(
                   isDense: true,
                   hintText: "Enter Chat conversation",
@@ -149,6 +189,9 @@ class AddChatPage extends StatelessWidget {
                     ),
                   ),
                 ),
+                onChanged: (value) {
+                  chat = value;
+                },
               ),
               const SizedBox(
                 height: 12,
@@ -191,6 +234,9 @@ class AddChatPage extends StatelessWidget {
 
                               if (date != null) {
                                 provider.dateChanged(date: date);
+
+                                chatDate =
+                                    "${date.day}-${date.month}-${date.year}";
                               }
                             },
                             child: const Text("Select Date"),
@@ -216,7 +262,7 @@ class AddChatPage extends StatelessWidget {
                           Text(
                             (provider.t == null)
                                 ? "HH:MM"
-                                : "${provider.t!.hour}:${provider.t!.minute}",
+                                : "${(provider.t!.hour == 0) ? "12" : provider.t!.hour % 12}:${provider.t!.minute.toString().padLeft(2, "0")}\t${(provider.t!.hour >= 12) ? "PM" : "AM"}",
                             style: TextStyle(
                               color: MyColor.theme1,
                               fontSize: 16,
@@ -232,6 +278,9 @@ class AddChatPage extends StatelessWidget {
 
                               if (time != null) {
                                 provider.timeChanged(time: time);
+
+                                chatTime =
+                                    "${(time.hour == 0) ? "12" : time.hour % 12}:${time.minute.toString().padLeft(2, "0")}\t${(time.hour >= 12) ? "PM" : "AM"}";
                               }
                             },
                             child: const Text("Select Time"),
@@ -241,7 +290,50 @@ class AddChatPage extends StatelessWidget {
                     }),
                   ),
                 ],
-              )
+              ),
+              const Spacer(),
+              GestureDetector(
+                onTap: () {
+                  bool isValidate = formKey.currentState!.validate();
+
+                  print(name);
+                  print(phoneNum);
+                  print(chat);
+                  print(chatDate);
+                  print(chatTime);
+
+                  if (isValidate) {
+                    Chat c = Chat(
+                      name: name,
+                      phoneNumber: phoneNum,
+                      chat: chat,
+                      date: chatDate,
+                      time: chatTime,
+                    );
+
+                    Provider.of<ChatController>(context, listen: false)
+                        .addChat(chat: c);
+                  }
+                  ;
+                },
+                child: Container(
+                  height: 50,
+                  width: 200,
+                  padding: const EdgeInsets.all(4),
+                  decoration: BoxDecoration(
+                    color: MyColor.theme1,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  alignment: Alignment.center,
+                  child: Text(
+                    "Save",
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: MyColor.theme3,
+                    ),
+                  ),
+                ),
+              ),
             ],
           ),
         ),
