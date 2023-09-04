@@ -51,6 +51,7 @@ class HomePage extends StatelessWidget {
                       height: 40,
                       width: 50,
                       decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
                         border: (provider.currentIndex == 0)
                             ? Border.fromBorderSide(
                                 BorderSide(
@@ -76,6 +77,7 @@ class HomePage extends StatelessWidget {
                         height: 40,
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
                           border: (provider.currentIndex == 1)
                               ? Border.fromBorderSide(
                                   BorderSide(
@@ -104,6 +106,7 @@ class HomePage extends StatelessWidget {
                         height: 40,
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
                           border: (provider.currentIndex == 2)
                               ? Border.fromBorderSide(
                                   BorderSide(color: MyColor.theme3, width: 2),
@@ -129,6 +132,7 @@ class HomePage extends StatelessWidget {
                         height: 40,
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
                           border: (provider.currentIndex == 3)
                               ? Border.fromBorderSide(
                                   BorderSide(

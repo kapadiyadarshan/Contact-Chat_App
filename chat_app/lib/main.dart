@@ -1,3 +1,4 @@
+import 'package:chat_app/controller/dateTime_controller.dart';
 import 'package:chat_app/controller/myPage_controller.dart';
 import 'package:chat_app/controller/platform_controller.dart';
 import 'package:chat_app/utils/color_utils.dart';
@@ -17,6 +18,9 @@ void main() {
         ),
         ChangeNotifierProvider(
           create: (context) => MyPageController(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => DateTimeController(),
         ),
       ],
       child: const MyApp(),
