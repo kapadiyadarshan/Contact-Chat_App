@@ -3,6 +3,7 @@ import 'package:chat_app/controller/dateTime_controller.dart';
 import 'package:chat_app/controller/image_controller.dart';
 import 'package:chat_app/controller/myPage_controller.dart';
 import 'package:chat_app/controller/platform_controller.dart';
+import 'package:chat_app/controller/settingPage_controller.dart';
 import 'package:chat_app/utils/color_utils.dart';
 import 'package:chat_app/utils/route_utils.dart';
 import 'package:chat_app/views/screens/android_screens/homePage.dart';
@@ -11,8 +12,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-void main() {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   SystemChrome.setPreferredOrientations(
@@ -20,6 +22,8 @@ void main() {
       DeviceOrientation.portraitUp,
     ],
   );
+
+  SharedPreferences preferences = await SharedPreferences.getInstance();
 
   runApp(
     MultiProvider(
@@ -37,8 +41,11 @@ void main() {
           create: (context) => ImageController(),
         ),
         ChangeNotifierProvider(
-          create: (context) => ChatController(),
-        )
+          create: (context) => ChatController(preferences: preferences),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => SettingPageController(),
+        ),
       ],
       child: const MyApp(),
     ),

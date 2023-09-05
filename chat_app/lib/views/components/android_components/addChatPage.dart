@@ -1,10 +1,12 @@
 import 'package:chat_app/controller/chat_controller.dart';
 import 'package:chat_app/controller/dateTime_controller.dart';
 import 'package:chat_app/controller/image_controller.dart';
+import 'package:chat_app/controller/myPage_controller.dart';
 import 'package:chat_app/model/chat_model.dart';
 import 'package:chat_app/utils/color_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class AddChatPage extends StatelessWidget {
@@ -119,6 +121,10 @@ class AddChatPage extends StatelessWidget {
                 validator: (value) {
                   if (value!.isEmpty) {
                     return "Please Phone number...";
+                  } else if (value.length < 10) {
+                    return "Phone Number Must Be Of 10 Digits...";
+                  } else if (value.length > 10) {
+                    return "Phone Number Must Be Of 10 Digits...";
                   } else {
                     return null;
                   }
@@ -215,7 +221,7 @@ class AddChatPage extends StatelessWidget {
                         children: [
                           Text(
                             (provider.d == null)
-                                ? "DD/MM/YYYY"
+                                ? "Pick Date"
                                 : "${provider.d!.day}-${provider.d!.month}-${provider.d!.year}",
                             style: TextStyle(
                               color: MyColor.theme1,
@@ -237,6 +243,8 @@ class AddChatPage extends StatelessWidget {
 
                                 chatDate =
                                     "${date.day}-${date.month}-${date.year}";
+
+                                chatDate = "${DateFormat("MMMd").format(date)}";
                               }
                             },
                             child: const Text("Select Date"),
@@ -261,7 +269,7 @@ class AddChatPage extends StatelessWidget {
                         children: [
                           Text(
                             (provider.t == null)
-                                ? "HH:MM"
+                                ? "Pick Time"
                                 : "${(provider.t!.hour == 0) ? "12" : provider.t!.hour % 12}:${provider.t!.minute.toString().padLeft(2, "0")}\t${(provider.t!.hour >= 12) ? "PM" : "AM"}",
                             style: TextStyle(
                               color: MyColor.theme1,
@@ -302,7 +310,7 @@ class AddChatPage extends StatelessWidget {
                   print(chatDate);
                   print(chatTime);
 
-                  if (isValidate) {
+                  if (isValidate && chatDate != "" && chatTime != "") {
                     Chat c = Chat(
                       name: name,
                       phoneNumber: phoneNum,
@@ -313,6 +321,28 @@ class AddChatPage extends StatelessWidget {
 
                     Provider.of<ChatController>(context, listen: false)
                         .addChat(chat: c);
+
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: const Text("Data Saved Successfully!!"),
+                        backgroundColor: MyColor.theme1,
+                        duration: const Duration(seconds: 2),
+                      ),
+                    );
+
+                    Provider.of<MyPageController>(context, listen: false)
+                        .changePage(index: 1);
+
+                    Provider.of<DateTimeController>(context, listen: false)
+                        .clearDateAndTime();
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text("Enter Date and Time...!!"),
+                        backgroundColor: Colors.red,
+                        duration: Duration(seconds: 2),
+                      ),
+                    );
                   }
                   ;
                 },

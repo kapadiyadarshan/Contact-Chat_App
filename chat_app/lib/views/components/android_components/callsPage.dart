@@ -1,12 +1,22 @@
 import 'package:chat_app/utils/color_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../controller/chat_controller.dart';
 import '../../../model/chat_model.dart';
 
 class CallsPage extends StatelessWidget {
   const CallsPage({super.key});
+
+  call({required String phoneNum}) async {
+    Uri callUri = Uri(
+      scheme: "tel",
+      path: phoneNum,
+    );
+
+    await launchUrl(callUri);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +32,7 @@ class CallsPage extends StatelessWidget {
           width: double.infinity,
           child: ListView.builder(
             itemBuilder: (context, index) {
-              Chat tempChat = provider.getChatsList[index];
+              Chat tempChat = provider.getChatsDataList[index];
 
               return Card(
                 child: ListTile(
@@ -38,7 +48,9 @@ class CallsPage extends StatelessWidget {
                     radius: 30,
                   ),
                   trailing: IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      call(phoneNum: tempChat.phoneNumber!);
+                    },
                     icon: Icon(
                       Icons.call,
                       size: 28,
@@ -48,7 +60,7 @@ class CallsPage extends StatelessWidget {
                 ),
               );
             },
-            itemCount: provider.getChatsList.length,
+            itemCount: provider.getChatsDataList.length,
           ),
         );
       }),

@@ -21,7 +21,7 @@ class ChatsPage extends StatelessWidget {
           width: double.infinity,
           child: ListView.builder(
             itemBuilder: (context, index) {
-              Chat tempChat = provider.getChatsList[index];
+              Chat tempChat = provider.getChatsDataList[index];
 
               return Card(
                 child: ListTile(
@@ -37,7 +37,8 @@ class ChatsPage extends StatelessWidget {
                     radius: 30,
                   ),
                   trailing: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Text("${tempChat.date}"),
                       Text("${tempChat.time}"),
@@ -46,7 +47,7 @@ class ChatsPage extends StatelessWidget {
                 ),
               );
             },
-            itemCount: provider.getChatsList.length,
+            itemCount: provider.getChatsDataList.length,
           ),
         );
       }),

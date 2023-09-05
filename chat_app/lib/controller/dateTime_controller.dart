@@ -13,4 +13,10 @@ class DateTimeController extends ChangeNotifier {
     t = time;
     notifyListeners();
   }
+
+  clearDateAndTime() {
+    d = null;
+    t = null;
+    notifyListeners();
+  }
 }
