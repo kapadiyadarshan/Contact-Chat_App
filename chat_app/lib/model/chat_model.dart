@@ -4,7 +4,7 @@ class Chat {
   String? chat;
   String? date;
   String? time;
-  // String image;
+  String image;
 
   Chat({
     required this.name,
@@ -12,5 +12,6 @@ class Chat {
     required this.chat,
     required this.date,
     required this.time,
+    required this.image,
   });
 }

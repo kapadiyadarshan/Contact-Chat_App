@@ -15,12 +15,14 @@ class ChatController extends ChangeNotifier {
   List<String> _allChatList = [];
   List<String> _allDateList = [];
   List<String> _allTimeList = [];
+  List<String> _allImageList = [];
 
   String nameKey = "name";
   String phoneNumKey = "phoneNum";
   String chatKey = "chat";
   String dateKey = "date";
   String timeKey = "time";
+  String imageKey = "image";
 
   List<Chat> get getChatsDataList {
     initData();
@@ -33,15 +35,18 @@ class ChatController extends ChangeNotifier {
     _allChatList = preferences.getStringList(chatKey) ?? [];
     _allDateList = preferences.getStringList(dateKey) ?? [];
     _allTimeList = preferences.getStringList(timeKey) ?? [];
+    _allImageList = preferences.getStringList(imageKey) ?? [];
 
     _allChatsDataList = List.generate(
       _allNameList.length,
       (index) => Chat(
-          name: _allNameList[index],
-          phoneNumber: _allPhoneNumList[index],
-          chat: _allChatList[index],
-          date: _allDateList[index],
-          time: _allTimeList[index]),
+        name: _allNameList[index],
+        phoneNumber: _allPhoneNumList[index],
+        chat: _allChatList[index],
+        date: _allDateList[index],
+        time: _allTimeList[index],
+        image: _allImageList[index],
+      ),
     );
   }
 
@@ -51,7 +56,8 @@ class ChatController extends ChangeNotifier {
       ..setStringList(phoneNumKey, _allPhoneNumList)
       ..setStringList(chatKey, _allChatList)
       ..setStringList(dateKey, _allDateList)
-      ..setStringList(timeKey, _allTimeList);
+      ..setStringList(timeKey, _allTimeList)
+      ..setStringList(imageKey, _allImageList);
 
     notifyListeners();
   }
@@ -66,6 +72,7 @@ class ChatController extends ChangeNotifier {
     _allChatList.add(chat.chat!);
     _allDateList.add(chat.date!);
     _allTimeList.add(chat.time!);
+    _allImageList.add(chat.image!);
 
     setData();
   }

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:chat_app/utils/color_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -44,8 +46,18 @@ class CallsPage extends StatelessWidget {
                     ),
                   ),
                   subtitle: Text("${tempChat.phoneNumber}"),
-                  leading: const CircleAvatar(
+                  leading: CircleAvatar(
                     radius: 30,
+                    foregroundImage: (tempChat.image != null)
+                        ? FileImage(File(tempChat.image))
+                        : null,
+                    child: Text(
+                      "${tempChat.name?[0].toUpperCase()}",
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
                   trailing: IconButton(
                     onPressed: () {

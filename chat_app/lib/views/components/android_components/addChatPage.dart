@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:chat_app/controller/chat_controller.dart';
 import 'package:chat_app/controller/dateTime_controller.dart';
 import 'package:chat_app/controller/image_controller.dart';
@@ -36,9 +38,15 @@ class AddChatPage extends StatelessWidget {
               Consumer<ImageController>(builder: (context, provider, _) {
                 return CircleAvatar(
                   radius: 80,
-                  backgroundImage: (provider.file != null)
-                      ? FileImage(Provider.of<ImageController>(context).file!)
+                  foregroundImage: (provider.path != null)
+                      ? FileImage(
+                          File(provider.path!),
+                        )
                       : null,
+                  child: Icon(
+                    Icons.add_a_photo_rounded,
+                    size: 32,
+                  ),
                 );
               }),
               const SizedBox(
@@ -54,7 +62,9 @@ class AddChatPage extends StatelessWidget {
 
                   if (file != null) {
                     Provider.of<ImageController>(context, listen: false)
-                        .imageUpdate(f: file);
+                        .imageUpdate(file: file!.path);
+
+                    image = file!.path;
                   }
                 },
                 child: Container(
@@ -317,6 +327,7 @@ class AddChatPage extends StatelessWidget {
                       chat: chat,
                       date: chatDate,
                       time: chatTime,
+                      image: image ?? "",
                     );
 
                     Provider.of<ChatController>(context, listen: false)
@@ -335,6 +346,9 @@ class AddChatPage extends StatelessWidget {
 
                     Provider.of<DateTimeController>(context, listen: false)
                         .clearDateAndTime();
+
+                    Provider.of<ImageController>(context, listen: false)
+                        .clearImage();
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(

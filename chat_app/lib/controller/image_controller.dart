@@ -4,10 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ImageController extends ChangeNotifier {
-  File? file;
+  String? path;
 
-  imageUpdate({required XFile f}) {
-    file = f as File;
+  imageUpdate({required String file}) {
+    path = file;
+    notifyListeners();
+  }
+
+  clearImage() {
+    path = null;
     notifyListeners();
   }
 }

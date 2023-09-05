@@ -71,9 +71,24 @@ class MyApp extends StatelessWidget {
                 ),
               ),
             ),
+            darkTheme: ThemeData(
+              useMaterial3: true,
+              brightness: Brightness.dark,
+              appBarTheme: AppBarTheme(
+                backgroundColor: MyColor.theme1,
+                foregroundColor: MyColor.theme3,
+                titleTextStyle: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                ),
+              ),
+            ),
+            themeMode: Provider.of<SettingPageController>(context).isDark
+                ? ThemeMode.dark
+                : ThemeMode.light,
             initialRoute: AndroidRoute.homePage,
             routes: {
-              AndroidRoute.homePage: (context) => HomePage(),
+              AndroidRoute.homePage: (context) => const HomePage(),
             },
           )
         : CupertinoApp(
