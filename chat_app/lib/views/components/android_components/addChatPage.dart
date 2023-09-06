@@ -218,7 +218,7 @@ class AddChatPage extends StatelessWidget {
                   Container(
                     height: 120,
                     width: 192,
-                    padding: const EdgeInsets.all(12),
+                    padding: const EdgeInsets.all(4),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5),
                       border: Border.all(),
@@ -239,7 +239,7 @@ class AddChatPage extends StatelessWidget {
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          ElevatedButton(
+                          ElevatedButton.icon(
                             onPressed: () async {
                               DateTime? date = await showDatePicker(
                                 context: context,
@@ -257,7 +257,16 @@ class AddChatPage extends StatelessWidget {
                                 chatDate = "${DateFormat("MMMd").format(date)}";
                               }
                             },
-                            child: const Text("Select Date"),
+                            icon: const Icon(Icons.date_range),
+                            style: ButtonStyle(
+                              backgroundColor: MaterialStatePropertyAll(
+                                MyColor.theme1,
+                              ),
+                              foregroundColor: MaterialStatePropertyAll(
+                                MyColor.theme3,
+                              ),
+                            ),
+                            label: const Text("Select Date"),
                           ),
                         ],
                       );
@@ -267,7 +276,7 @@ class AddChatPage extends StatelessWidget {
                   Container(
                     height: 120,
                     width: 192,
-                    padding: const EdgeInsets.all(12),
+                    padding: const EdgeInsets.all(4),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5),
                       border: Border.all(),
@@ -287,7 +296,7 @@ class AddChatPage extends StatelessWidget {
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          ElevatedButton(
+                          ElevatedButton.icon(
                             onPressed: () async {
                               TimeOfDay? time = await showTimePicker(
                                 context: context,
@@ -301,7 +310,16 @@ class AddChatPage extends StatelessWidget {
                                     "${(time.hour == 0) ? "12" : time.hour % 12}:${time.minute.toString().padLeft(2, "0")}\t${(time.hour >= 12) ? "PM" : "AM"}";
                               }
                             },
-                            child: const Text("Select Time"),
+                            icon: const Icon(Icons.timelapse),
+                            style: ButtonStyle(
+                              backgroundColor: MaterialStatePropertyAll(
+                                MyColor.theme1,
+                              ),
+                              foregroundColor: MaterialStatePropertyAll(
+                                MyColor.theme3,
+                              ),
+                            ),
+                            label: const Text("Select Time"),
                           ),
                         ],
                       );

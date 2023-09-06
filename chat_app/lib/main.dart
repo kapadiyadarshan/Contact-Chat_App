@@ -44,7 +44,7 @@ Future<void> main() async {
           create: (context) => ChatController(preferences: preferences),
         ),
         ChangeNotifierProvider(
-          create: (context) => SettingPageController(),
+          create: (context) => SettingPageController(preferences: preferences),
         ),
       ],
       child: const MyApp(),

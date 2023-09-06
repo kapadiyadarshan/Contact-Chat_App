@@ -76,4 +76,27 @@ class ChatController extends ChangeNotifier {
 
     setData();
   }
+
+  deleteChat({required int index}) {
+    initData();
+
+    _allChatsDataList.removeAt(index);
+
+    _allNameList.removeAt(index);
+    _allPhoneNumList.removeAt(index);
+    _allChatList.removeAt(index);
+    _allDateList.removeAt(index);
+    _allTimeList.removeAt(index);
+    _allImageList.removeAt(index);
+
+    setData();
+  }
+
+  editChat({required int index, required Chat chat}) {
+    initData();
+    _allNameList[index] = chat.name!;
+    _allPhoneNumList[index] = chat.phoneNumber!;
+    _allChatList[index] = chat.chat!;
+    setData();
+  }
 }
