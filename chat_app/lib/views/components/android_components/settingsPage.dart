@@ -25,11 +25,7 @@ class MySettingsPage extends StatelessWidget {
         child: Column(
           children: [
             //profile
-            Container(
-              decoration: BoxDecoration(
-                color: MyColor.bgColor,
-                borderRadius: BorderRadius.circular(20),
-              ),
+            Card(
               child: Consumer<SettingPageController>(
                   builder: (context, provider, _) {
                 Profile tempProfile =
@@ -42,7 +38,7 @@ class MySettingsPage extends StatelessWidget {
                         "Profile",
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          color: MyColor.theme1,
+                          // color: MyColor.theme1,
                           fontSize: 20,
                         ),
                       ),
@@ -50,34 +46,17 @@ class MySettingsPage extends StatelessWidget {
                       leading: Icon(
                         Icons.person,
                         size: 32,
-                        color: MyColor.theme1,
+                        // color: MyColor.theme1,
                       ),
-                      trailing: SwitchTheme(
-                        data: SwitchThemeData(
-                          thumbColor: MaterialStatePropertyAll(
-                            (provider.isProfileOn)
-                                ? MyColor.theme3
-                                : MyColor.theme1,
-                          ),
-                          trackColor: MaterialStatePropertyAll(
-                            (provider.isProfileOn)
-                                ? MyColor.theme1
-                                : MyColor.theme3,
-                          ),
-                          trackOutlineColor:
-                              MaterialStatePropertyAll(MyColor.theme1),
-                          trackOutlineWidth: const MaterialStatePropertyAll(1),
-                        ),
-                        child: Switch(
-                          value: provider.isProfileOn,
-                          onChanged: (value) {
-                            provider.profileOnOff();
-                          },
-                        ),
+                      trailing: Switch(
+                        value: provider.getProfileOn,
+                        onChanged: (value) {
+                          provider.profileOnOff();
+                        },
                       ),
                     ),
                     Visibility(
-                      visible: provider.isProfileOn,
+                      visible: provider.getProfileOn,
                       child: Container(
                         padding: const EdgeInsets.all(12),
                         child: Form(
@@ -115,6 +94,7 @@ class MySettingsPage extends StatelessWidget {
                                 height: 18,
                               ),
                               TextFormField(
+                                // controller: nameController,
                                 validator: (value) {
                                   if (value!.isEmpty) {
                                     return "Please enter name...";
@@ -130,8 +110,8 @@ class MySettingsPage extends StatelessWidget {
                                   isDense: true,
                                   hintText: "Enter Name",
                                   label: const Text("Name"),
-                                  labelStyle: TextStyle(
-                                    color: MyColor.theme1,
+                                  labelStyle: const TextStyle(
+                                    // color: MyColor.theme1,
                                     fontWeight: FontWeight.w500,
                                   ),
                                   border: const OutlineInputBorder(),
@@ -145,12 +125,14 @@ class MySettingsPage extends StatelessWidget {
                                 ),
                                 onChanged: (value) {
                                   name = value;
+                                  // nameController.text = value;
                                 },
                               ),
                               const SizedBox(
                                 height: 12,
                               ),
                               TextFormField(
+                                // controller: bioController,
                                 validator: (value) {
                                   if (value!.isEmpty) {
                                     return "Please enter bio...";
@@ -167,7 +149,7 @@ class MySettingsPage extends StatelessWidget {
                                   hintText: "Enter Bio",
                                   label: const Text("Bio"),
                                   labelStyle: TextStyle(
-                                    color: MyColor.theme1,
+                                    // color: MyColor.theme1,
                                     fontWeight: FontWeight.w500,
                                   ),
                                   border: const OutlineInputBorder(),
@@ -181,6 +163,7 @@ class MySettingsPage extends StatelessWidget {
                                 ),
                                 onChanged: (value) {
                                   bio = value;
+                                  // bioController.text = value;
                                 },
                               ),
                               const SizedBox(
@@ -199,14 +182,16 @@ class MySettingsPage extends StatelessWidget {
                                         provider.profileUpdate(
                                           Name: name!,
                                           Bio: bio!,
-                                          MyImage: image!,
+                                          MyImage: image ??
+                                              provider.getProfile.image,
                                         );
 
                                         ScaffoldMessenger.of(context)
                                             .showSnackBar(
                                           SnackBar(
                                             content: const Text(
-                                                "Data Saved Successfully!!"),
+                                              "Data Saved Successfully!!",
+                                            ),
                                             backgroundColor: MyColor.theme1,
                                             duration:
                                                 const Duration(seconds: 2),
@@ -236,6 +221,9 @@ class MySettingsPage extends StatelessWidget {
                                       provider.profileClear();
 
                                       provider.imageClear();
+
+                                      // nameController.clear();
+                                      // bioController.clear();
                                     },
                                     child: Container(
                                       height: 40,
@@ -269,50 +257,32 @@ class MySettingsPage extends StatelessWidget {
               height: 12,
             ),
             //Theme
-            Container(
-              decoration: BoxDecoration(
-                color: MyColor.bgColor,
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: ListTile(
-                title: Text(
-                  "Theme",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: MyColor.theme1,
-                    fontSize: 20,
+            Consumer<SettingPageController>(builder: (context, pro, _) {
+              return Card(
+                child: ListTile(
+                  title: const Text(
+                    "Theme",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      // color: MyColor.theme1,
+                      fontSize: 20,
+                    ),
+                  ),
+                  subtitle: const Text("Change Theme"),
+                  leading: const Icon(
+                    Icons.light_mode,
+                    size: 32,
+                    // color: MyColor.theme1,
+                  ),
+                  trailing: Switch(
+                    value: pro.getTheme,
+                    onChanged: (value) {
+                      pro.changeTheme();
+                    },
                   ),
                 ),
-                subtitle: const Text("Change Theme"),
-                leading: Icon(
-                  Icons.light_mode,
-                  size: 32,
-                  color: MyColor.theme1,
-                ),
-                trailing:
-                    Consumer<SettingPageController>(builder: (context, pro, _) {
-                  return SwitchTheme(
-                    data: SwitchThemeData(
-                      thumbColor: MaterialStatePropertyAll(
-                        (pro.isDark) ? MyColor.theme3 : MyColor.theme1,
-                      ),
-                      trackColor: MaterialStatePropertyAll(
-                        (pro.isDark) ? MyColor.theme1 : MyColor.theme3,
-                      ),
-                      trackOutlineColor:
-                          MaterialStatePropertyAll(MyColor.theme1),
-                      trackOutlineWidth: const MaterialStatePropertyAll(1),
-                    ),
-                    child: Switch(
-                      value: pro.isDark,
-                      onChanged: (value) {
-                        pro.changeTheme();
-                      },
-                    ),
-                  );
-                }),
-              ),
-            ),
+              );
+            }),
           ],
         ),
       ),

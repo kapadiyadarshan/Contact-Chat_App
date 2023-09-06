@@ -4,6 +4,7 @@ import 'package:chat_app/controller/chat_controller.dart';
 import 'package:chat_app/controller/dateTime_controller.dart';
 import 'package:chat_app/controller/image_controller.dart';
 import 'package:chat_app/controller/myPage_controller.dart';
+import 'package:chat_app/controller/settingPage_controller.dart';
 import 'package:chat_app/model/chat_model.dart';
 import 'package:chat_app/utils/color_utils.dart';
 import 'package:flutter/material.dart';
@@ -35,53 +36,38 @@ class AddChatPage extends StatelessWidget {
           autovalidateMode: AutovalidateMode.onUserInteraction,
           child: Column(
             children: [
-              Consumer<ImageController>(builder: (context, provider, _) {
-                return CircleAvatar(
-                  radius: 80,
-                  foregroundImage: (provider.path != null)
-                      ? FileImage(
-                          File(provider.path!),
-                        )
-                      : null,
-                  child: Icon(
-                    Icons.add_a_photo_rounded,
-                    size: 32,
-                  ),
-                );
-              }),
               const SizedBox(
                 height: 12,
               ),
-              //Add Image
-              GestureDetector(
-                onTap: () async {
-                  ImagePicker pickImg = ImagePicker();
-                  XFile? file;
+              Consumer<ImageController>(builder: (context, provider, _) {
+                return GestureDetector(
+                  onTap: () async {
+                    ImagePicker pickImg = ImagePicker();
+                    XFile? file;
 
-                  file = await pickImg.pickImage(source: ImageSource.gallery);
+                    file = await pickImg.pickImage(source: ImageSource.gallery);
 
-                  if (file != null) {
-                    Provider.of<ImageController>(context, listen: false)
-                        .imageUpdate(file: file!.path);
+                    if (file != null) {
+                      Provider.of<ImageController>(context, listen: false)
+                          .imageUpdate(file: file!.path);
 
-                    image = file!.path;
-                  }
-                },
-                child: Container(
-                  height: 40,
-                  width: 120,
-                  padding: const EdgeInsets.all(4),
-                  decoration: BoxDecoration(
-                    color: MyColor.theme1,
-                    borderRadius: BorderRadius.circular(10),
+                      image = file!.path;
+                    }
+                  },
+                  child: CircleAvatar(
+                    radius: 80,
+                    foregroundImage: (provider.path != null)
+                        ? FileImage(
+                            File(provider.path!),
+                          )
+                        : null,
+                    child: Icon(
+                      Icons.add_a_photo_rounded,
+                      size: 32,
+                    ),
                   ),
-                  alignment: Alignment.center,
-                  child: Text("Add Image",
-                      style: TextStyle(
-                        color: MyColor.theme3,
-                      )),
-                ),
-              ),
+                );
+              }),
               const SizedBox(
                 height: 24,
               ),
@@ -102,13 +88,13 @@ class AddChatPage extends StatelessWidget {
                   hintText: "Enter full name",
                   label: const Text("Full Name"),
                   labelStyle: TextStyle(
-                    color: MyColor.theme1,
+                    // color: MyColor.theme1,
                     fontWeight: FontWeight.w500,
                   ),
                   prefixIcon: Icon(
                     Icons.person,
                     size: 24,
-                    color: MyColor.theme1,
+                    // color: MyColor.theme1,
                   ),
                   border: const OutlineInputBorder(),
                   focusedBorder: OutlineInputBorder(
@@ -147,13 +133,13 @@ class AddChatPage extends StatelessWidget {
                   hintText: "Enter phone number",
                   label: const Text("Phone Number"),
                   labelStyle: TextStyle(
-                    color: MyColor.theme1,
+                    // color: MyColor.theme1,
                     fontWeight: FontWeight.w500,
                   ),
                   prefixIcon: Icon(
                     Icons.phone,
                     size: 24,
-                    color: MyColor.theme1,
+                    // color: MyColor.theme1,
                   ),
                   border: const OutlineInputBorder(),
                   focusedBorder: OutlineInputBorder(
@@ -187,14 +173,14 @@ class AddChatPage extends StatelessWidget {
                   isDense: true,
                   hintText: "Enter Chat conversation",
                   label: const Text("Chat Conversation"),
-                  labelStyle: TextStyle(
-                    color: MyColor.theme1,
+                  labelStyle: const TextStyle(
+                    // color: MyColor.theme1,
                     fontWeight: FontWeight.w500,
                   ),
-                  prefixIcon: Icon(
+                  prefixIcon: const Icon(
                     Icons.chat,
                     size: 24,
-                    color: MyColor.theme1,
+                    // color: MyColor.theme1,
                   ),
                   border: const OutlineInputBorder(),
                   focusedBorder: OutlineInputBorder(
@@ -221,7 +207,12 @@ class AddChatPage extends StatelessWidget {
                     padding: const EdgeInsets.all(4),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5),
-                      border: Border.all(),
+                      border: Border.all(
+                        color:
+                            Provider.of<SettingPageController>(context).getTheme
+                                ? Colors.white60
+                                : Colors.black54,
+                      ),
                     ),
                     alignment: Alignment.center,
                     child: Consumer<DateTimeController>(
@@ -234,9 +225,9 @@ class AddChatPage extends StatelessWidget {
                                 ? "Pick Date"
                                 : "${provider.d!.day}-${provider.d!.month}-${provider.d!.year}",
                             style: TextStyle(
-                              color: MyColor.theme1,
+                              // color: MyColor.theme1,
                               fontSize: 16,
-                              fontWeight: FontWeight.bold,
+                              fontWeight: FontWeight.w600,
                             ),
                           ),
                           ElevatedButton.icon(
@@ -272,14 +263,19 @@ class AddChatPage extends StatelessWidget {
                       );
                     }),
                   ),
-                  Spacer(),
+                  const Spacer(),
                   Container(
                     height: 120,
                     width: 192,
                     padding: const EdgeInsets.all(4),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5),
-                      border: Border.all(),
+                      border: Border.all(
+                        color:
+                            Provider.of<SettingPageController>(context).getTheme
+                                ? Colors.white60
+                                : Colors.black54,
+                      ),
                     ),
                     child: Consumer<DateTimeController>(
                         builder: (context, provider, _) {
@@ -291,9 +287,9 @@ class AddChatPage extends StatelessWidget {
                                 ? "Pick Time"
                                 : "${(provider.t!.hour == 0) ? "12" : provider.t!.hour % 12}:${provider.t!.minute.toString().padLeft(2, "0")}\t${(provider.t!.hour >= 12) ? "PM" : "AM"}",
                             style: TextStyle(
-                              color: MyColor.theme1,
+                              // color: MyColor.theme1,
                               fontSize: 16,
-                              fontWeight: FontWeight.bold,
+                              fontWeight: FontWeight.w600,
                             ),
                           ),
                           ElevatedButton.icon(

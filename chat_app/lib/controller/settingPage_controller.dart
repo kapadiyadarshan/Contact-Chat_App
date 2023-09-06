@@ -1,10 +1,11 @@
 import 'package:chat_app/model/profile_model.dart';
+import 'package:chat_app/utils/color_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SettingPageController extends ChangeNotifier {
-  bool isProfileOn = false;
-  bool isDark = false;
+  bool _isProfileOn = false;
+  bool _isDark = false;
   String? path;
 
   Profile _profile = Profile();
@@ -14,17 +15,27 @@ class SettingPageController extends ChangeNotifier {
   SettingPageController({required this.preferences});
 
   Profile get getProfile {
-    initData();
+    initProfileData();
     return _profile;
   }
 
-  initData() {
+  get getTheme {
+    _isDark = preferences.getBool("theme") ?? false;
+    return _isDark;
+  }
+
+  get getProfileOn {
+    _isProfileOn = preferences.getBool("profile") ?? false;
+    return _isProfileOn;
+  }
+
+  initProfileData() {
     _profile.name = preferences.getString('Pr_name') ?? "";
     _profile.bio = preferences.getString('Pr_bio') ?? "";
     _profile.image = preferences.getString('Pr_image') ?? "";
   }
 
-  setData() {
+  setProfileData() {
     preferences.setString("Pr_name", _profile.name!);
     preferences.setString("Pr_bio", _profile.bio!);
     preferences.setString("Pr_image", _profile.image!);
@@ -33,19 +44,21 @@ class SettingPageController extends ChangeNotifier {
   }
 
   profileOnOff() {
-    isProfileOn = !isProfileOn;
+    _isProfileOn = !_isProfileOn;
+    preferences.setBool("profile", _isProfileOn);
     notifyListeners();
   }
 
   changeTheme() {
-    isDark = !isDark;
+    _isDark = !_isDark;
+    preferences.setBool("theme", _isDark);
     notifyListeners();
   }
 
   imageUpdate({required String file}) {
-    initData();
+    initProfileData();
     _profile.image = file;
-    setData();
+    setProfileData();
     // notifyListeners();
   }
 
@@ -56,7 +69,7 @@ class SettingPageController extends ChangeNotifier {
 
   profileUpdate(
       {required String Name, required String Bio, required String MyImage}) {
-    initData();
+    initProfileData();
     _profile.name = Name;
     _profile.bio = Bio;
     _profile.image = MyImage;
@@ -65,7 +78,7 @@ class SettingPageController extends ChangeNotifier {
     // bio = Bio;
     // image = MyImage;
 
-    setData();
+    setProfileData();
   }
 
   profileClear() {
@@ -73,6 +86,6 @@ class SettingPageController extends ChangeNotifier {
     _profile.bio = "";
     _profile.image = "";
 
-    setData();
+    setProfileData();
   }
 }

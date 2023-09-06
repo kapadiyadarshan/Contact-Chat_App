@@ -53,7 +53,7 @@ class CallsPage extends StatelessWidget {
                         : null,
                     child: Text(
                       "${tempChat.name?[0].toUpperCase()}",
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
                       ),
@@ -63,10 +63,10 @@ class CallsPage extends StatelessWidget {
                     onPressed: () {
                       call(phoneNum: tempChat.phoneNumber!);
                     },
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.call,
                       size: 28,
-                      color: MyColor.theme1,
+                      // color: MyColor.theme1,
                     ),
                   ),
                 ),

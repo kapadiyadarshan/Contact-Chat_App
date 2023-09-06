@@ -61,6 +61,7 @@ class MyApp extends StatelessWidget {
         ? MaterialApp(
             debugShowCheckedModeBanner: false,
             theme: ThemeData(
+              colorSchemeSeed: MyColor.theme1,
               useMaterial3: true,
               appBarTheme: AppBarTheme(
                 backgroundColor: MyColor.theme1,
@@ -73,6 +74,7 @@ class MyApp extends StatelessWidget {
             ),
             darkTheme: ThemeData(
               useMaterial3: true,
+              colorSchemeSeed: MyColor.theme1,
               brightness: Brightness.dark,
               appBarTheme: AppBarTheme(
                 backgroundColor: MyColor.theme1,
@@ -83,7 +85,7 @@ class MyApp extends StatelessWidget {
                 ),
               ),
             ),
-            themeMode: Provider.of<SettingPageController>(context).isDark
+            themeMode: Provider.of<SettingPageController>(context).getTheme
                 ? ThemeMode.dark
                 : ThemeMode.light,
             initialRoute: AndroidRoute.homePage,
