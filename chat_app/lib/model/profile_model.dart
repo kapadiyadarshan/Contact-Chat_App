@@ -1,5 +1,7 @@
+import 'package:flutter/cupertino.dart';
+
 class Profile {
-  String name = "";
-  String bio = "";
+  TextEditingController name = TextEditingController();
+  TextEditingController bio = TextEditingController();
   String image = "";
 }

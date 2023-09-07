@@ -7,6 +7,7 @@ import 'package:chat_app/controller/myPage_controller.dart';
 import 'package:chat_app/controller/settingPage_controller.dart';
 import 'package:chat_app/model/chat_model.dart';
 import 'package:chat_app/utils/color_utils.dart';
+import 'package:chat_app/views/components/android_components/snackBar.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
@@ -328,12 +329,6 @@ class AddChatPage extends StatelessWidget {
                 onTap: () {
                   bool isValidate = formKey.currentState!.validate();
 
-                  print(name);
-                  print(phoneNum);
-                  print(chat);
-                  print(chatDate);
-                  print(chatTime);
-
                   if (isValidate && chatDate != "" && chatTime != "") {
                     Chat c = Chat(
                       name: name,
@@ -348,10 +343,9 @@ class AddChatPage extends StatelessWidget {
                         .addChat(chat: c);
 
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: const Text("Data Saved Successfully!!"),
-                        backgroundColor: MyColor.theme1,
-                        duration: const Duration(seconds: 2),
+                      mySnackBar(
+                        content: "Data Saved Successfully!!",
+                        myColor: MyColor.theme1,
                       ),
                     );
 
@@ -365,10 +359,9 @@ class AddChatPage extends StatelessWidget {
                         .clearImage();
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text("Enter Date and Time...!!"),
-                        backgroundColor: Colors.red,
-                        duration: Duration(seconds: 2),
+                      mySnackBar(
+                        content: "Enter Date and Time...!!",
+                        myColor: Colors.redAccent,
                       ),
                     );
                   }

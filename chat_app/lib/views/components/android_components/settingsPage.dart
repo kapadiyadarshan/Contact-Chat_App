@@ -94,7 +94,7 @@ class MySettingsPage extends StatelessWidget {
                                 height: 18,
                               ),
                               TextFormField(
-                                // controller: nameController,
+                                controller: tempProfile.name,
                                 validator: (value) {
                                   if (value!.isEmpty) {
                                     return "Please enter name...";
@@ -105,7 +105,7 @@ class MySettingsPage extends StatelessWidget {
                                 cursorColor: MyColor.theme1,
                                 keyboardType: TextInputType.name,
                                 textInputAction: TextInputAction.next,
-                                initialValue: tempProfile.name,
+                                // initialValue: tempProfile.name,
                                 decoration: InputDecoration(
                                   isDense: true,
                                   hintText: "Enter Name",
@@ -132,7 +132,7 @@ class MySettingsPage extends StatelessWidget {
                                 height: 12,
                               ),
                               TextFormField(
-                                // controller: bioController,
+                                controller: tempProfile.bio,
                                 validator: (value) {
                                   if (value!.isEmpty) {
                                     return "Please enter bio...";
@@ -143,7 +143,7 @@ class MySettingsPage extends StatelessWidget {
                                 cursorColor: MyColor.theme1,
                                 keyboardType: TextInputType.name,
                                 textInputAction: TextInputAction.done,
-                                initialValue: tempProfile.bio,
+                                // initialValue: tempProfile.bio,
                                 decoration: InputDecoration(
                                   isDense: true,
                                   hintText: "Enter Bio",

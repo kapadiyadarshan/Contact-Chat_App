@@ -30,14 +30,14 @@ class SettingPageController extends ChangeNotifier {
   }
 
   initProfileData() {
-    _profile.name = preferences.getString('Pr_name') ?? "";
-    _profile.bio = preferences.getString('Pr_bio') ?? "";
+    _profile.name.text = preferences.getString('Pr_name') ?? "";
+    _profile.bio.text = preferences.getString('Pr_bio') ?? "";
     _profile.image = preferences.getString('Pr_image') ?? "";
   }
 
   setProfileData() {
-    preferences.setString("Pr_name", _profile.name!);
-    preferences.setString("Pr_bio", _profile.bio!);
+    preferences.setString("Pr_name", _profile.name.text);
+    preferences.setString("Pr_bio", _profile.bio.text);
     preferences.setString("Pr_image", _profile.image!);
 
     notifyListeners();
@@ -70,8 +70,8 @@ class SettingPageController extends ChangeNotifier {
   profileUpdate(
       {required String Name, required String Bio, required String MyImage}) {
     initProfileData();
-    _profile.name = Name;
-    _profile.bio = Bio;
+    _profile.name.text = Name;
+    _profile.bio.text = Bio;
     _profile.image = MyImage;
 
     // name = Name;
@@ -82,8 +82,8 @@ class SettingPageController extends ChangeNotifier {
   }
 
   profileClear() {
-    _profile.name = "";
-    _profile.bio = "";
+    _profile.name.clear();
+    _profile.bio.clear();
     _profile.image = "";
 
     setProfileData();

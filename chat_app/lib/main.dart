@@ -97,6 +97,7 @@ class MyApp extends StatelessWidget {
             debugShowCheckedModeBanner: false,
             theme: const CupertinoThemeData(
               brightness: Brightness.light,
+              primaryColor: CupertinoColors.link,
             ),
             initialRoute: iOSRoute.Homepage,
             routes: {
