@@ -77,6 +77,7 @@ class ChatsPage extends StatelessWidget {
                                       Navigator.pop(context);
 
                                       showDialog(
+                                        barrierDismissible: false,
                                         context: context,
                                         builder: (context) => AlertDialog(
                                           title: Text(

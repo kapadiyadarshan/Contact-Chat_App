@@ -34,7 +34,7 @@ class MySettingsPage extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     ListTile(
-                      title: Text(
+                      title: const Text(
                         "Profile",
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
@@ -43,7 +43,7 @@ class MySettingsPage extends StatelessWidget {
                         ),
                       ),
                       subtitle: const Text("Update Profile"),
-                      leading: Icon(
+                      leading: const Icon(
                         Icons.person,
                         size: 32,
                         // color: MyColor.theme1,
@@ -148,7 +148,7 @@ class MySettingsPage extends StatelessWidget {
                                   isDense: true,
                                   hintText: "Enter Bio",
                                   label: const Text("Bio"),
-                                  labelStyle: TextStyle(
+                                  labelStyle: const TextStyle(
                                     // color: MyColor.theme1,
                                     fontWeight: FontWeight.w500,
                                   ),
@@ -180,8 +180,10 @@ class MySettingsPage extends StatelessWidget {
 
                                       if (isValidate) {
                                         provider.profileUpdate(
-                                          Name: name!,
-                                          Bio: bio!,
+                                          Name: name ??
+                                              provider.getProfile.name.text,
+                                          Bio: bio ??
+                                              provider.getProfile.bio.text,
                                           MyImage: image ??
                                               provider.getProfile.image,
                                         );

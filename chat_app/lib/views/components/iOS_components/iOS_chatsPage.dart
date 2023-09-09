@@ -74,10 +74,10 @@ class iOSchatsPage extends StatelessWidget {
                               context: context,
                               builder: (context) {
                                 return CupertinoAlertDialog(
-                                  title: Text("Edit"),
+                                  title: const Text("Edit"),
                                   actions: [
                                     CupertinoButton(
-                                      child: Text("Done"),
+                                      child: const Text("Done"),
                                       onPressed: () {},
                                     )
                                   ],
