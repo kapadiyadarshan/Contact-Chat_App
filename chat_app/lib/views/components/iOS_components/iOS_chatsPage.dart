@@ -8,7 +8,9 @@ import '../../../controller/chat_controller.dart';
 import '../../../model/chat_model.dart';
 
 class iOSchatsPage extends StatelessWidget {
-  const iOSchatsPage({super.key});
+  iOSchatsPage({super.key});
+
+  GlobalKey<FormState> formKey = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
@@ -70,16 +72,142 @@ class iOSchatsPage extends StatelessWidget {
                       actions: [
                         CupertinoActionSheetAction(
                           onPressed: () async {
-                            await showDialog(
+                            await showCupertinoDialog(
                               context: context,
                               builder: (context) {
                                 return CupertinoAlertDialog(
-                                  title: const Text("Edit"),
+                                  title: const Text(
+                                    "Edit Contact",
+                                    style: TextStyle(
+                                      fontSize: 24,
+                                    ),
+                                  ),
+                                  content: Form(
+                                    key: formKey,
+                                    child: Column(
+                                      children: [
+                                        const SizedBox(
+                                          height: 12,
+                                        ),
+                                        CircleAvatar(
+                                          radius: 60,
+                                          foregroundImage: FileImage(
+                                            File(tempChat.image),
+                                          ),
+                                          child: Text(
+                                            "${tempChat.name?[0].toUpperCase()}",
+                                            style: const TextStyle(
+                                              fontSize: 48,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ),
+                                        CupertinoTextFormFieldRow(
+                                          validator: (value) {
+                                            if (value!.isEmpty) {
+                                              return "Please enter name...";
+                                            } else {
+                                              return null;
+                                            }
+                                          },
+                                          initialValue: tempChat.name,
+                                          keyboardType: TextInputType.name,
+                                          textInputAction: TextInputAction.next,
+                                          placeholder: "Enter Name",
+                                          textAlign: TextAlign.center,
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(5),
+                                            border: Border.all(
+                                              color: CupertinoColors
+                                                  .opaqueSeparator,
+                                            ),
+                                          ),
+                                          onChanged: (value) {
+                                            tempChat.name = value;
+                                          },
+                                        ),
+                                        CupertinoTextFormFieldRow(
+                                          validator: (value) {
+                                            if (value!.isEmpty) {
+                                              return "Please Phone number...";
+                                            } else if (value.length < 10) {
+                                              return "Phone Number Must Be Of 10 Digits...";
+                                            } else if (value.length > 10) {
+                                              return "Phone Number Must Be Of 10 Digits...";
+                                            } else {
+                                              return null;
+                                            }
+                                          },
+                                          initialValue: tempChat.phoneNumber,
+                                          keyboardType: TextInputType.phone,
+                                          textInputAction: TextInputAction.next,
+                                          placeholder: "Enter Phone Number",
+                                          textAlign: TextAlign.center,
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(5),
+                                            border: Border.all(
+                                              color: CupertinoColors
+                                                  .opaqueSeparator,
+                                            ),
+                                          ),
+                                          onChanged: (value) {
+                                            tempChat.phoneNumber = value;
+                                          },
+                                        ),
+                                        CupertinoTextFormFieldRow(
+                                          validator: (value) {
+                                            if (value!.isEmpty) {
+                                              return "Please enter chat conversation...";
+                                            } else {
+                                              return null;
+                                            }
+                                          },
+                                          initialValue: tempChat.chat,
+                                          keyboardType: TextInputType.text,
+                                          textInputAction: TextInputAction.done,
+                                          placeholder: "Enter Chat",
+                                          textAlign: TextAlign.center,
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(5),
+                                            border: Border.all(
+                                              color: CupertinoColors
+                                                  .opaqueSeparator,
+                                            ),
+                                          ),
+                                          onChanged: (value) {
+                                            tempChat.chat = value;
+                                          },
+                                        ),
+                                      ],
+                                    ),
+                                  ),
                                   actions: [
-                                    CupertinoButton(
+                                    CupertinoActionSheetAction(
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                      isDestructiveAction: true,
+                                      child: const Text("Cancel"),
+                                    ),
+                                    CupertinoActionSheetAction(
+                                      onPressed: () {
+                                        bool isValidate =
+                                            formKey.currentState!.validate();
+
+                                        if (isValidate) {
+                                          Navigator.pop(context);
+
+                                          provider.editChat(
+                                            index: index,
+                                            chat: tempChat,
+                                          );
+                                        }
+                                      },
                                       child: const Text("Done"),
-                                      onPressed: () {},
-                                    )
+                                    ),
                                   ],
                                 );
                               },
@@ -90,7 +218,10 @@ class iOSchatsPage extends StatelessWidget {
                         ),
                       ],
                       cancelButton: CupertinoActionSheetAction(
-                        onPressed: () {},
+                        onPressed: () {
+                          provider.deleteChat(index: index);
+                          Navigator.pop(context);
+                        },
                         isDestructiveAction: true,
                         child: Text("Delete"),
                       ),

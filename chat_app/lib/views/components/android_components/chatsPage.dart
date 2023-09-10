@@ -146,7 +146,8 @@ class ChatsPage extends StatelessWidget {
                                                         OutlineInputBorder(
                                                       borderRadius:
                                                           BorderRadius.circular(
-                                                              10),
+                                                        10,
+                                                      ),
                                                       borderSide: BorderSide(
                                                         color: MyColor.theme1,
                                                         width: 2,

@@ -62,7 +62,7 @@ class AddChatPage extends StatelessWidget {
                             File(provider.path!),
                           )
                         : null,
-                    child: Icon(
+                    child: const Icon(
                       Icons.add_a_photo_rounded,
                       size: 32,
                     ),
@@ -88,11 +88,11 @@ class AddChatPage extends StatelessWidget {
                   isDense: true,
                   hintText: "Enter full name",
                   label: const Text("Full Name"),
-                  labelStyle: TextStyle(
+                  labelStyle: const TextStyle(
                     // color: MyColor.theme1,
                     fontWeight: FontWeight.w500,
                   ),
-                  prefixIcon: Icon(
+                  prefixIcon: const Icon(
                     Icons.person,
                     size: 24,
                     // color: MyColor.theme1,
@@ -133,11 +133,11 @@ class AddChatPage extends StatelessWidget {
                   isDense: true,
                   hintText: "Enter phone number",
                   label: const Text("Phone Number"),
-                  labelStyle: TextStyle(
+                  labelStyle: const TextStyle(
                     // color: MyColor.theme1,
                     fontWeight: FontWeight.w500,
                   ),
-                  prefixIcon: Icon(
+                  prefixIcon: const Icon(
                     Icons.phone,
                     size: 24,
                     // color: MyColor.theme1,

@@ -10,9 +10,9 @@ class iOSHomePage extends StatelessWidget {
   iOSHomePage({super.key});
 
   List<Widget> components = [
-    iOSaddChatPage(),
+    iOSAddChatPage(),
     iOSchatsPage(),
-    iOScallsPage(),
+    const iOScallsPage(),
     iOSsettingsPage(),
   ];
 
@@ -24,8 +24,8 @@ class iOSHomePage extends StatelessWidget {
           context: context,
           builder: (context) {
             return CupertinoAlertDialog(
-              title: Text("Exit"),
-              content: Text("Are you sure exit?"),
+              title: const Text("Exit"),
+              content: const Text("Are you sure exit?"),
               actions: [
                 CupertinoActionSheetAction(
                   onPressed: () {

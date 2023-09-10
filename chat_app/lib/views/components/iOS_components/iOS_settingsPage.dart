@@ -53,123 +53,127 @@ class iOSsettingsPage extends StatelessWidget {
             Profile tempProfile =
                 Provider.of<SettingPageController>(context).getProfile;
 
-            return Container(
-              padding: const EdgeInsets.all(12),
-              child: Form(
-                key: formKey,
-                autovalidateMode: AutovalidateMode.onUserInteraction,
-                child: Column(
-                  children: [
-                    GestureDetector(
-                      onTap: () async {
-                        ImagePicker pickImg = ImagePicker();
-                        XFile? file;
+            return Visibility(
+              visible: provider.getProfileOn,
+              child: Container(
+                padding: const EdgeInsets.all(12),
+                child: Form(
+                  key: formKey,
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  child: Column(
+                    children: [
+                      GestureDetector(
+                        onTap: () async {
+                          ImagePicker pickImg = ImagePicker();
+                          XFile? file;
 
-                        file = await pickImg.pickImage(
-                            source: ImageSource.gallery);
+                          file = await pickImg.pickImage(
+                              source: ImageSource.gallery);
 
-                        if (file != null) {
-                          image = file.path;
+                          if (file != null) {
+                            image = file.path;
 
-                          provider.imageUpdate(file: image!);
-                          tempProfile.image = file.path;
-                        }
-                      },
-                      child: CircleAvatar(
-                        radius: 60,
-                        foregroundImage: FileImage(
-                          File(provider.getProfile.image),
-                        ),
-                        child: const Icon(
-                          Icons.add_a_photo_rounded,
-                          size: 32,
+                            provider.imageUpdate(file: image!);
+                            tempProfile.image = file.path;
+                          }
+                        },
+                        child: CircleAvatar(
+                          radius: 60,
+                          foregroundImage: FileImage(
+                            File(provider.getProfile.image),
+                          ),
+                          child: const Icon(
+                            Icons.add_a_photo_rounded,
+                            size: 32,
+                          ),
                         ),
                       ),
-                    ),
-                    const SizedBox(
-                      height: 12,
-                    ),
-                    CupertinoTextFormFieldRow(
-                      controller: tempProfile.name,
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return "                          Please enter name...";
-                        } else {
-                          return null;
-                        }
-                      },
-                      textInputAction: TextInputAction.next,
-                      textAlign: TextAlign.center,
-                      placeholder: "Enter Name",
-                      onChanged: (value) {
-                        name = value;
-                      },
-                    ),
-                    CupertinoTextFormFieldRow(
-                      controller: tempProfile.bio,
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return "                            Please enter bio...";
-                        } else {
-                          return null;
-                        }
-                      },
-                      textInputAction: TextInputAction.done,
-                      textAlign: TextAlign.center,
-                      placeholder: "Enter Bio",
-                      onChanged: (value) {
-                        bio = value;
-                      },
-                    ),
-                    const SizedBox(
-                      height: 12,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        CupertinoButton(
-                          child: const Text("SAVE"),
-                          onPressed: () {
-                            bool isValidate = formKey.currentState!.validate();
+                      const SizedBox(
+                        height: 12,
+                      ),
+                      CupertinoTextFormFieldRow(
+                        controller: tempProfile.name,
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return "                          Please enter name...";
+                          } else {
+                            return null;
+                          }
+                        },
+                        textInputAction: TextInputAction.next,
+                        textAlign: TextAlign.center,
+                        placeholder: "Enter Name",
+                        onChanged: (value) {
+                          name = value;
+                        },
+                      ),
+                      CupertinoTextFormFieldRow(
+                        controller: tempProfile.bio,
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return "                            Please enter bio...";
+                          } else {
+                            return null;
+                          }
+                        },
+                        textInputAction: TextInputAction.done,
+                        textAlign: TextAlign.center,
+                        placeholder: "Enter Bio",
+                        onChanged: (value) {
+                          bio = value;
+                        },
+                      ),
+                      const SizedBox(
+                        height: 12,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          CupertinoButton(
+                            child: const Text("SAVE"),
+                            onPressed: () {
+                              bool isValidate =
+                                  formKey.currentState!.validate();
 
-                            if (isValidate) {
-                              provider.profileUpdate(
-                                Name: name ?? provider.getProfile.name.text,
-                                Bio: bio ?? provider.getProfile.bio.text,
-                                MyImage: image ?? provider.getProfile.image,
-                              );
+                              if (isValidate) {
+                                provider.profileUpdate(
+                                  Name: name ?? provider.getProfile.name.text,
+                                  Bio: bio ?? provider.getProfile.bio.text,
+                                  MyImage: image ?? provider.getProfile.image,
+                                );
 
-                              showCupertinoDialog(
-                                context: context,
-                                builder: (context) {
-                                  return CupertinoAlertDialog(
-                                    title: const Text(
-                                        "Profile Save Succesfully.."),
-                                    actions: [
-                                      CupertinoButton(
-                                        child: const Text("Okay"),
-                                        onPressed: () {
-                                          Navigator.pop(context);
-                                        },
-                                      ),
-                                    ],
-                                  );
-                                },
-                              );
-                            }
-                          },
-                        ),
-                        CupertinoButton(
-                          child: const Text("CLEAR"),
-                          onPressed: () {
-                            provider.profileClear();
+                                showCupertinoDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return CupertinoAlertDialog(
+                                      title: const Text(
+                                          "Profile Save Successfully.."),
+                                      actions: [
+                                        CupertinoButton(
+                                          child: const Text("Okay"),
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                          },
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                              }
+                            },
+                          ),
+                          CupertinoButton(
+                            child: const Text("CLEAR"),
+                            onPressed: () {
+                              provider.profileClear();
 
-                            provider.imageClear();
-                          },
-                        ),
-                      ],
-                    )
-                  ],
+                              provider.imageClear();
+                            },
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
                 ),
               ),
             );
