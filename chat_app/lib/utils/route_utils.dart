@@ -1,4 +1,5 @@
 class AndroidRoute {
+  static String splashScrren = "splashScreen";
   static String homePage = "/";
 }
 

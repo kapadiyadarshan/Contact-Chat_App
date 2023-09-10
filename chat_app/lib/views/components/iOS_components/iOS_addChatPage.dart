@@ -272,8 +272,8 @@ class iOSAddChatPage extends StatelessWidget {
                     )
                   ],
                 ),
-                SizedBox(
-                  height: 224,
+                const SizedBox(
+                  height: 214,
                 ),
                 CupertinoButton.filled(
                   child: const Text("SAVE"),

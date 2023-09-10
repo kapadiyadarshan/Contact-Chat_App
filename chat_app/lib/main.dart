@@ -8,6 +8,7 @@ import 'package:chat_app/utils/color_utils.dart';
 import 'package:chat_app/utils/route_utils.dart';
 import 'package:chat_app/views/screens/android_screens/homePage.dart';
 import 'package:chat_app/views/screens/iOS_screens/iOS_homePage.dart';
+import 'package:chat_app/views/screens/splashScreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -88,9 +89,10 @@ class MyApp extends StatelessWidget {
             themeMode: Provider.of<SettingPageController>(context).getTheme
                 ? ThemeMode.dark
                 : ThemeMode.light,
-            initialRoute: AndroidRoute.homePage,
+            initialRoute: AndroidRoute.splashScrren,
             routes: {
               AndroidRoute.homePage: (context) => const HomePage(),
+              AndroidRoute.splashScrren: (context) => SplashScreen(),
             },
           )
         : CupertinoApp(
