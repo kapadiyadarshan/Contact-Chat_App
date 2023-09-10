@@ -66,7 +66,7 @@ class HomePage extends StatelessWidget {
                     trackColor: MaterialStatePropertyAll(MyColor.theme3),
                   ),
                   child: Switch(
-                    value: provider.isAndroid,
+                    value: provider.getPlatform,
                     onChanged: (value) {
                       provider.changePlatform();
                     },

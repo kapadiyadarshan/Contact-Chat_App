@@ -54,7 +54,7 @@ class iOSHomePage extends StatelessWidget {
           trailing:
               Consumer<PlatformController>(builder: (context, provider, _) {
             return CupertinoSwitch(
-              value: provider.isAndroid,
+              value: provider.getPlatform,
               onChanged: (value) {
                 provider.changePlatform();
               },

@@ -4,11 +4,21 @@ import 'package:chat_app/controller/chat_controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../model/chat_model.dart';
 
 class iOScallsPage extends StatelessWidget {
   const iOScallsPage({super.key});
+
+  call({required String phoneNum}) async {
+    Uri callUri = Uri(
+      scheme: "tel",
+      path: phoneNum,
+    );
+
+    await launchUrl(callUri);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +48,9 @@ class iOScallsPage extends StatelessWidget {
               ),
               subtitle: Text("${tempChat.phoneNumber}"),
               trailing: IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  call(phoneNum: tempChat.phoneNumber!);
+                },
                 icon: const Icon(
                   CupertinoIcons.phone_fill,
                   size: 28,
@@ -46,7 +58,9 @@ class iOScallsPage extends StatelessWidget {
               ),
             );
           },
-          separatorBuilder: (context, index) => Divider(),
+          separatorBuilder: (context, index) => const Divider(
+            thickness: 0.3,
+          ),
           itemCount: provider.getChatsDataList.length,
         );
       }),

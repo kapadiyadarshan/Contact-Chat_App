@@ -1,10 +1,12 @@
 import 'dart:async';
 
+import 'package:chat_app/controller/splashScreen_controller.dart';
 import 'package:chat_app/utils/color_utils.dart';
 import 'package:chat_app/utils/route_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class SplashScreen extends StatelessWidget {
   SplashScreen({super.key});
@@ -13,12 +15,15 @@ class SplashScreen extends StatelessWidget {
     Timer.periodic(const Duration(seconds: 4), (timer) {
       Navigator.of(context).pushReplacementNamed(AndroidRoute.homePage);
       timer.cancel();
+
+      Provider.of<SplashScreenController>(context, listen: false)
+          .isSplashChanged();
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    // changeScreen(context: context);
+    changeScreen(context: context);
     return Scaffold(
       body: Stack(
         alignment: Alignment.center,

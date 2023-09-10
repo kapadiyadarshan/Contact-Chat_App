@@ -261,7 +261,9 @@ class iOSchatsPage extends StatelessWidget {
               ),
             );
           },
-          separatorBuilder: (context, index) => const Divider(),
+          separatorBuilder: (context, index) => const Divider(
+            thickness: 0.3,
+          ),
           itemCount: provider.getChatsDataList.length,
         );
       }),

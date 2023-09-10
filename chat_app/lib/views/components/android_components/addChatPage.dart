@@ -377,7 +377,7 @@ class AddChatPage extends StatelessWidget {
                   ),
                   alignment: Alignment.center,
                   child: Text(
-                    "Save",
+                    "SAVE",
                     style: TextStyle(
                       fontSize: 20,
                       color: MyColor.theme3,

@@ -4,6 +4,7 @@ import 'package:chat_app/controller/image_controller.dart';
 import 'package:chat_app/controller/myPage_controller.dart';
 import 'package:chat_app/controller/platform_controller.dart';
 import 'package:chat_app/controller/settingPage_controller.dart';
+import 'package:chat_app/controller/splashScreen_controller.dart';
 import 'package:chat_app/utils/color_utils.dart';
 import 'package:chat_app/utils/route_utils.dart';
 import 'package:chat_app/views/screens/android_screens/homePage.dart';
@@ -30,7 +31,7 @@ Future<void> main() async {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (context) => PlatformController(),
+          create: (context) => PlatformController(preferences: preferences),
         ),
         ChangeNotifierProvider(
           create: (context) => MyPageController(),
@@ -47,6 +48,9 @@ Future<void> main() async {
         ChangeNotifierProvider(
           create: (context) => SettingPageController(preferences: preferences),
         ),
+        ChangeNotifierProvider(
+          create: (context) => SplashScreenController(),
+        ),
       ],
       child: const MyApp(),
     ),
@@ -58,7 +62,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Provider.of<PlatformController>(context).isAndroid
+    return Provider.of<PlatformController>(context).getPlatform
         ? MaterialApp(
             debugShowCheckedModeBanner: false,
             theme: ThemeData(
@@ -89,7 +93,11 @@ class MyApp extends StatelessWidget {
             themeMode: Provider.of<SettingPageController>(context).getTheme
                 ? ThemeMode.dark
                 : ThemeMode.light,
-            initialRoute: AndroidRoute.splashScrren,
+            initialRoute:
+                Provider.of<SplashScreenController>(context, listen: false)
+                        .isSplash
+                    ? AndroidRoute.homePage
+                    : AndroidRoute.splashScrren,
             routes: {
               AndroidRoute.homePage: (context) => const HomePage(),
               AndroidRoute.splashScrren: (context) => SplashScreen(),
@@ -105,9 +113,14 @@ class MyApp extends StatelessWidget {
                       : Brightness.light,
               primaryColor: CupertinoColors.link,
             ),
-            initialRoute: iOSRoute.Homepage,
+            initialRoute:
+                Provider.of<SplashScreenController>(context, listen: false)
+                        .isSplash
+                    ? AndroidRoute.homePage
+                    : AndroidRoute.splashScrren,
             routes: {
               iOSRoute.Homepage: (p0) => iOSHomePage(),
+              AndroidRoute.splashScrren: (p0) => SplashScreen(),
             },
           );
   }

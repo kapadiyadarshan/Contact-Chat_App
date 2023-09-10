@@ -158,6 +158,7 @@ class iOSAddChatPage extends StatelessWidget {
                         borderRadius: BorderRadius.circular(5),
                         border: Border.all(
                           color: CupertinoColors.opaqueSeparator,
+                          width: 0.5,
                         ),
                       ),
                       child: Consumer<DateTimeController>(
@@ -221,6 +222,7 @@ class iOSAddChatPage extends StatelessWidget {
                         borderRadius: BorderRadius.circular(5),
                         border: Border.all(
                           color: CupertinoColors.opaqueSeparator,
+                          width: 0.5,
                         ),
                       ),
                       child: Consumer<DateTimeController>(
