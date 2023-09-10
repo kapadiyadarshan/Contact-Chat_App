@@ -10,10 +10,11 @@
 
 <img src = "https://github.com/kapadiyadarshan/Chat_App/assets/121553877/ebd6783e-7e98-4469-8cd0-bbb41deee58d" width=300>
 
-<img src = "https://github.com/kapadiyadarshan/Chat_App/assets/121553877/748782ee-62b6-406e-8666-5958a616a87f" width=300>
+<img src = "https://github.com/kapadiyadarshan/Chat_App/assets/121553877/fc18cd19-6847-46d2-b5d5-23b2af485281" width=300>
 
-<img src = "https://github.com/kapadiyadarshan/Chat_App/assets/121553877/88b00862-ec90-4aa3-b771-4cb817a409e1" width=300>
+<img src = "https://github.com/kapadiyadarshan/Chat_App/assets/121553877/6eff6599-36a9-464c-ad42-1461b66afe5e" width=300>
 
-<img src = "https://github.com/kapadiyadarshan/Chat_App/assets/121553877/138251cf-0c4c-468c-b3f7-24dad8a90f01" width=300>
+<img src = "https://github.com/kapadiyadarshan/Chat_App/assets/121553877/c1d24e14-a1e4-477f-bdcb-6a56f76feeee" width=300>
 
-<img src = "https://github.com/kapadiyadarshan/Chat_App/assets/121553877/913c0e84-3e36-4cf0-8f7e-727cdf87a151" width=300>
+<img src = "https://github.com/kapadiyadarshan/Chat_App/assets/121553877/5ca53e2f-b86b-4349-82cc-8c88cd2d4bd9" width=300>
+
