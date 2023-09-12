@@ -233,7 +233,7 @@ class iOSAddChatPage extends StatelessWidget {
                             Text(
                               (provider.t == null)
                                   ? "Pick Time"
-                                  : "${(provider.t!.hour == 0) ? "12" : provider.t!.hour % 12}:${provider.t!.minute.toString().padLeft(2, "0")}\t${(provider.t!.hour >= 12) ? "PM" : "AM"}",
+                                  : "${(provider.t!.hour == 0) ? 12 : (provider.t!.hour > 12) ? (provider.t!.hour % 12).toString().padLeft(2, "0") : provider.t!.hour.toString().padLeft(2, "0")}:${provider.t!.minute.toString().padLeft(2, "0")}\t${(provider.t!.hour >= 12) ? "PM" : "AM"}",
                               style: const TextStyle(
                                 // color: MyColor.theme1,
                                 fontSize: 16,
@@ -258,7 +258,7 @@ class iOSAddChatPage extends StatelessWidget {
                                         );
                                         // t = TimeOfDay.fromDateTime(time);
                                         chatTime =
-                                            "${(time.hour == 0) ? "12" : time.hour % 12}:${time.minute.toString().padLeft(2, "0")}\t${(time.hour >= 12) ? "PM" : "AM"}";
+                                            "${(provider.t!.hour == 0) ? 12 : (provider.t!.hour > 12) ? (provider.t!.hour % 12).toString().padLeft(2, "0") : provider.t!.hour.toString().padLeft(2, "0")}:${provider.t!.minute.toString().padLeft(2, "0")}\t${(provider.t!.hour >= 12) ? "PM" : "AM"}";
                                       },
                                     ),
                                   ),
